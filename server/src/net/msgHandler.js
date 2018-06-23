@@ -17,6 +17,7 @@ const uws = require('uws'),
 module.exports = (room, ws, event, data) => {
 	let me = room,
 		p = me.getPlayer(ws);
+		if (!p) return;
 	switch (event) {
 		case 'join':
 			if (me.gameStarted) {
@@ -108,6 +109,16 @@ module.exports = (room, ws, event, data) => {
 			p.attackDest = data;
 			// ready to attack!
 			attack(me, p);
+			break;
+		case 'cancel_atk':
+			p.attackSource = null;
+			p.attackDest = null;
+			break;
+		case 'end_atk_turn':
+			p.attackSource = null;
+			p.attackDest = null;
+			p.attacking = false;
+			me.startMovePhase(p);
 			break;
 	}
 }
