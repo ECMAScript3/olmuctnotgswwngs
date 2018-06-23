@@ -56,7 +56,7 @@ class GameRoom {
 	broadcastMap(mapBuffer) {
 		for (let i = 0; i < this.players.length; ++i) {
 			let player = this.players[i];
-			player.socket.send(mapBuffer);
+			player.send('map', mapBuffer);
 		}
 	}
 	broadcastMapState() {
@@ -72,7 +72,7 @@ class GameRoom {
 				smap[tid].owner = t.owner.index;
 			}
 		}
-		let buffer = Buffer.from(JSON.stringify(smap), 'utf8');
+		let buffer = JSON.stringify(smap);
 		this.broadcastMap(buffer);
 	}
 	shutdown(ws, why) {
