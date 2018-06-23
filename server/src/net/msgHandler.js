@@ -120,5 +120,16 @@ module.exports = (room, ws, event, data) => {
 			p.attacking = false;
 			me.startMovePhase(p);
 			break;
+		case 'endturn':
+			console.log('player ' + player.index + ' ended their turn');
+			// end of player's turn
+			player.send('timeout', 0);
+			player.attacking = false;
+			player.moving = false;
+			player.newTroops = 0;
+			player.attackSource = null;
+			player.attackDest = null;
+			me.endTurn(player);
+			break;
 	}
 }
