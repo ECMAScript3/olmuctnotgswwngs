@@ -539,7 +539,7 @@
         myId = -1,
         selectingTerritory = false,
         newTroops,
-        autoSelect = true,
+        autoSelect = 0,
         reinforcing = false,
         attacking = false,
         moving = false;
