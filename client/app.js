@@ -612,7 +612,7 @@
         }, 2.5);
     },
     init = () => {
-        joinRoom('ws://127.0.0.1:8080');
+        joinRoom('ws://mcanalley.io:8080');
         // create and setup app
         app = new PIXI.Application({ 
             width: window.innerWidth, 
