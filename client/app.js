@@ -704,6 +704,7 @@
             setStatus('please wait...');
             selectingTerritory = false;
         }).on('map', mapState => {
+            mapState = JSON.parse(mapState);
             // update map state
             for (const tid in mapState) {
                 let tstate = mapState[tid];
