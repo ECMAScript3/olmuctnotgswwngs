@@ -72,7 +72,7 @@ class GameRoom {
 				smap[tid].owner = t.owner.index;
 			}
 		}
-		let buffer = lz4.encode(JSON.stringify(smap));
+		let buffer = Buffer.from(JSON.stringify(smap), 'utf8');
 		this.broadcastMap(buffer);
 	}
 	shutdown(ws, why) {

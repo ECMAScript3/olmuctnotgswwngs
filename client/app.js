@@ -502,7 +502,7 @@
                     me.emit(data.e, data.d);
                 } else {
                     let buf = new Buffer(msgEvent.data),
-                        decompressed = lz4.decode(buf),
+                        decompressed = buf.toString('utf8'),
                         mapData = '';
                     for (let i = 0; i < decompressed.length; ++i) {
                         let charCode = decompressed[i];

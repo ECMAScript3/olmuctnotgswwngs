@@ -1,4 +1,4 @@
-const polyroll = require('./polyroll');
+const polyroll = require('./pollyroll');
 
 module.exports = (room, player) => {
 	let sourceId = player.attackSource,
