@@ -539,7 +539,7 @@
         myId = -1,
         selectingTerritory = false,
         newTroops,
-        autoSelect = true,
+        autoSelect = 0,
         reinforcing = false,
         attacking = false,
         moving = false;
@@ -563,7 +563,7 @@
             send('selectionChoice', tid);
         } else if (reinforcing) {
             send('place', tid);
-            newTroops--;
+            if (newTroops >= 0) newTroops--;
         } else if (attacking == 'source') {
             send('atk_src', tid);
             setStatus('select attack destination');
@@ -573,6 +573,7 @@
             send('atk_dst', tid);
             setStatus('select attack source');
             attacking = 'source';
+            $("#br-button").text('end attack');
         }
     },
     startAttack = () => {
@@ -611,7 +612,7 @@
         }, 2.5);
     },
     init = () => {
-        joinRoom('ws://127.0.0.1:8080');
+        joinRoom('ws://mcanalley.io:8080');
         // create and setup app
         app = new PIXI.Application({ 
             width: window.innerWidth, 
@@ -669,11 +670,13 @@
         });
         $("#br-button").click(e => {
             if (attacking == 'source') {
+                send('end_atk_turn', 0);
+                endAttack();
+            } else if (attacking == 'dest') {
                 send('cancel_atk', 0);
                 $("#br-button").text('end attack');
-            } else if (attacking == 'dest') {
-                send('atk', 0);
-                $("#br-button").text('end attack');
+                setStatus('select attack source');
+                attacking = 'source';
             } else if (moving) {
                 send('endTurn', 0);
             }
@@ -704,6 +707,7 @@
             setStatus('please wait...');
             selectingTerritory = false;
         }).on('map', mapState => {
+            mapState = JSON.parse(mapState);
             // update map state
             for (const tid in mapState) {
                 let tstate = mapState[tid];
