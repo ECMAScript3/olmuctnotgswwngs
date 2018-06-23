@@ -574,6 +574,8 @@
             setStatus('select attack source');
             attacking = 'source';
             $("#br-button").text('end attack');
+        } else if (moving) {
+            send('endturn', 0);
         }
     },
     startAttack = () => {
