@@ -1,0 +1,9 @@
+{
+    "name": "risk-io",
+    "description": "woooo",
+    "dependencies": {
+        "uws": "*",
+        "uuid": "*",
+        "lz4": "*"
+    }
+}
