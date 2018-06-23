@@ -563,7 +563,7 @@
             send('selectionChoice', tid);
         } else if (reinforcing) {
             send('place', tid);
-            newTroops--;
+            if (newTroops >= 0) newTroops--;
         } else if (attacking == 'source') {
             send('atk_src', tid);
             setStatus('select attack destination');
@@ -573,6 +573,7 @@
             send('atk_dst', tid);
             setStatus('select attack source');
             attacking = 'source';
+            $("#br-button").text('end attack');
         }
     },
     startAttack = () => {
@@ -669,11 +670,13 @@
         });
         $("#br-button").click(e => {
             if (attacking == 'source') {
+                send('end_atk_turn', 0);
+                endAttack();
+            } else if (attacking == 'dest') {
                 send('cancel_atk', 0);
                 $("#br-button").text('end attack');
-            } else if (attacking == 'dest') {
-                send('atk', 0);
-                $("#br-button").text('end attack');
+                setStatus('select attack source');
+                attacking = 'source';
             } else if (moving) {
                 send('endTurn', 0);
             }
